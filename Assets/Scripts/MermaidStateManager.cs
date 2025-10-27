@@ -39,7 +39,7 @@ public class MermaidStateManager : MonoBehaviour
 
             if (pos.y <= 6f)
             {
-                pos.y += 0.3f * Time.deltaTime;
+                pos.y += 1.3f * Time.deltaTime;
                 transform.position = pos;
             }
             else

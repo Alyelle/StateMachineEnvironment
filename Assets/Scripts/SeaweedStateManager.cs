@@ -14,6 +14,7 @@ public class SeaweedStateManager : MonoBehaviour
         Vector3 pos = transform.position;
 
         pos.x = Random.Range(-7f, 7f);
+        pos.y = -4.24f;
         transform.position = pos;
 
         StartCoroutine(GrowingTimer());
