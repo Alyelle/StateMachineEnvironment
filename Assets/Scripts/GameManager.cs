@@ -1,30 +1,54 @@
 using UnityEngine;
-
+using System.Collections;
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] public GameObject mermaid;
-    [SerializeField] public GameObject seaweed;
-    [SerializeField] public GameObject bass;
+    [SerializeField] public GameObject mermaidPf;
+    [SerializeField] public GameObject seaweedPf;
+    [SerializeField] public GameObject bassPf;
+
+    private GameObject currentMermaid;
 
     private void Awake()
     {
-       
+        
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Vector3 spawn = new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), transform.position.z);
-        Instantiate(mermaid, spawn, Quaternion.identity);
+        StartCoroutine(SeaweedSpawn());
+        StartCoroutine(BassSpawn());
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()   
     {
-        if (mermaid == null)
+        if (currentMermaid == null)
         {
-            Vector3 spawn = new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), transform.position.z);
-            Instantiate(mermaid, spawn, Quaternion.identity);
+            SpawnMermaid();
         }
+    }
+
+    void SpawnMermaid()
+    {
+        Vector3 spawn = new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), transform.position.z);
+        currentMermaid = Instantiate(mermaidPf, spawn, Quaternion.identity);
+    }
+
+    IEnumerator SeaweedSpawn()
+    {
+        float spawnTimer = Random.Range(2f, 10f);
+
+        yield return new WaitForSeconds(spawnTimer);
+        Instantiate(seaweedPf);
+
+    }
+
+    IEnumerator BassSpawn()
+    {
+        float spawnTimer = Random.Range(5f, 15f);
+
+        yield return new WaitForSeconds(spawnTimer);
+        Instantiate(bassPf);
     }
 
 

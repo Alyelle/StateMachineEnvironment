@@ -10,12 +10,15 @@ public class MermaidStateManager : MonoBehaviour
     private Vector2 moveDir;
     private bool moving;
 
+    //private bool coroutine;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
         speed = 3f;
         moving = false;
+        //coroutine = true;
 
         StartCoroutine(SwimAround());
 
@@ -24,7 +27,24 @@ public class MermaidStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (moving)
+        if (anim.GetBool("touchedWeed") || anim.GetBool("touchedBass"))
+        {
+            StopCoroutine(SwimAround());
+
+            Vector3 pos = transform.position;
+
+            if (pos.y <= 6f)
+            {
+                pos.y += 0.3f * Time.deltaTime;
+                transform.position = pos;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+        }
+        else if (moving)
         {
             Vector3 scale = transform.localScale;
 
@@ -78,6 +98,7 @@ public class MermaidStateManager : MonoBehaviour
             if (weedAnim.GetBool("overgrown"))
             {
                 anim.SetBool("touchedWeed", true);
+                Destroy(collision);
             }
         }
         else if (collision.CompareTag("Bass"))
@@ -85,7 +106,8 @@ public class MermaidStateManager : MonoBehaviour
             Animator bassAnim = collision.GetComponent<Animator>();
             if (bassAnim.GetBool("guitar"))
             {
-                anim.SetBool("guitar", true);
+                anim.SetBool("touchedBass", true);
+                Destroy(collision);
             }
         }
     }
