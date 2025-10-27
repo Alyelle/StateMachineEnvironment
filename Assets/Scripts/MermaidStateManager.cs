@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 
 public class MermaidStateManager : MonoBehaviour
 {
