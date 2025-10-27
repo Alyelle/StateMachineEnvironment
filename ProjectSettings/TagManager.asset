@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Seaweed
+  - Bass
+  - Mermaid
   layers:
   - Default
   - TransparentFX
@@ -49,6 +52,9 @@ TagManager:
     locked: 0
   - name: Seaweed
     uniqueID: 2288262141
+    locked: 0
+  - name: Bass
+    uniqueID: 2058422039
     locked: 0
   m_RenderingLayers:
   - Default

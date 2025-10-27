@@ -6,6 +6,10 @@ public class MermaidStateManager : MonoBehaviour
 {
     [SerializeField] public Animator anim;
 
+    [SerializeField] public AudioSource audioSrc;
+    [SerializeField] public AudioClip guitar;
+    [SerializeField] public AudioClip yipee;
+
     private float speed;
     private Vector2 moveDir;
     private bool moving;
@@ -98,7 +102,8 @@ public class MermaidStateManager : MonoBehaviour
             if (weedAnim.GetBool("overgrown"))
             {
                 anim.SetBool("touchedWeed", true);
-                Destroy(collision);
+                audioSrc.PlayOneShot(yipee);
+                Destroy(collision.gameObject);
             }
         }
         else if (collision.CompareTag("Bass"))
@@ -107,7 +112,8 @@ public class MermaidStateManager : MonoBehaviour
             if (bassAnim.GetBool("guitar"))
             {
                 anim.SetBool("touchedBass", true);
-                Destroy(collision);
+                audioSrc.PlayOneShot(guitar);
+                Destroy(collision.gameObject);
             }
         }
     }

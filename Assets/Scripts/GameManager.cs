@@ -36,19 +36,25 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SeaweedSpawn()
     {
-        float spawnTimer = Random.Range(2f, 10f);
+        while (true)
+        {
+            float spawnTimer = Random.Range(4f, 15f);
 
-        yield return new WaitForSeconds(spawnTimer);
-        Instantiate(seaweedPf);
+            yield return new WaitForSeconds(spawnTimer);
+            Instantiate(seaweedPf);
+        }
 
     }
 
     IEnumerator BassSpawn()
     {
-        float spawnTimer = Random.Range(5f, 15f);
+        while (true)
+        {
+            float spawnTimer = Random.Range(6f, 15f);
 
-        yield return new WaitForSeconds(spawnTimer);
-        Instantiate(bassPf);
+            yield return new WaitForSeconds(spawnTimer);
+            Instantiate(bassPf);
+        }
     }
 
 

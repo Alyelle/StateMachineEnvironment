@@ -7,7 +7,8 @@ public class BassStateManager : MonoBehaviour
 
     private bool swimming;
     private Vector2 moveDir;
-    private bool up;
+    //private bool up;
+    private bool sinking;
 
     private Coroutine swimRoutine;
     private Coroutine floatRoutine;
@@ -16,7 +17,8 @@ public class BassStateManager : MonoBehaviour
     void Start()
     {
         swimming= false;
-        up = false;
+        sinking = false;
+        //up = false;
         Vector3 pos = transform.position;
 
         pos.x = Random.Range(-7f, 7f);
@@ -34,11 +36,11 @@ public class BassStateManager : MonoBehaviour
 
             if (moveDir.x > 0)
             {
-                scale.x = 1;
+                scale.x = -1;
             }
             else if (moveDir.x < 0)
             {
-                scale.x = -1;
+                scale.x = 1;
             }
             transform.localScale = scale;
 
@@ -46,8 +48,23 @@ public class BassStateManager : MonoBehaviour
 
             Vector3 pos = transform.position;
             pos.x = Mathf.Clamp(pos.x, -7f, 7f);
+            pos.x = Mathf.Clamp(pos.x, -4f, 4f);
 
             transform.position = pos;
+        }
+        else if (sinking)
+        {
+            Vector3 pos = transform.position;
+
+            if (pos.y >= -5f)
+            {
+                pos.y -= 0.3f * Time.deltaTime;
+                transform.position = pos;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -71,39 +88,20 @@ public class BassStateManager : MonoBehaviour
 
         anim.SetBool("guitar", true);
 
-        StopCoroutine(SwimAround());
+        StopCoroutine(swimRoutine);
         swimming = false;
-        StartCoroutine(FloatUpDown());
+        sinking = true ;
 
     }
     IEnumerator SwimAround()
     {
         while (true)
         {
-            float swimTime = Random.Range(4f, 7f);
+            float swimTime = Random.Range(0.1f, 4f);
             swimming = true;
-            moveDir = new Vector2(Random.Range(-1f, 1f), transform.position.y);
+            moveDir = new Vector2(Random.Range(-1f, 1f), 0f);
 
             yield return new WaitForSeconds(swimTime);
-        }
-    }
-
-    IEnumerator FloatUpDown()
-    {
-        while (true)
-        {
-            float timer = 1f;
-            float speed = 0.5f;
-
-            Vector3 pos = transform.position;
-
-            up = true;
-            pos.y += speed * Time.deltaTime;
-            yield return new WaitForSeconds(timer);
-
-            up = false;
-            pos.y -= speed* Time.deltaTime;
-            yield return new WaitForSeconds(timer);
         }
     }
 }
